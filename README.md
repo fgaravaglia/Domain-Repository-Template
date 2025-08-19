@@ -6,6 +6,7 @@ Put here the description of the repository
 
 this repository has the following structure:
 
+```txt
 Repository/
 |-- docs/
 |-- src/
@@ -23,6 +24,7 @@ Repository/
 |   |-- Clients/
 |   |   |-- Umbrella.Authentication.WebApi.Client/
 |   |   |   |-- Umbrella.Authentication.WebApi.Client.csproj
+```
 
 it is divided into documentation (docs folder) ans Source code (src folder).
 inside src folder, the code is organized in the following way:
