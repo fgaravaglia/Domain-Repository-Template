@@ -9,8 +9,12 @@ this repository has the following structure:
 ```txt
 Repository/
 |-- docs/
+|-- IaC/
+|-- scripts/
 |-- src/
 |   |-- Domain/
+|   |   |-- Umbrella.Authentication.Application/
+|   |   |   |-- Umbrella.Authentication.Application.csproj
 |   |   |-- Umbrella.Authentication.Domain/
 |   |   |   |-- Umbrella.Authentication.Domain.csproj
 |   |   |-- Umbrella.Authentication.Infrastructure/
@@ -22,24 +26,33 @@ Repository/
 |   |   |-- Umbrella.Authentication.WebApi/
 |   |   |   |-- Umbrella.Authentication.WebApi.csproj
 |   |-- Clients/
-|   |   |-- Umbrella.Authentication.WebApi.Client/
-|   |   |   |-- Umbrella.Authentication.WebApi.Client.csproj
+|       |-- Umbrella.Authentication.WebApi.Client/
+|           |-- Umbrella.Authentication.WebApi.Client.csproj
 ```
 
-it is divided into documentation (docs folder) ans Source code (src folder).
+it is divided into documentation (docs folder), script (scripts folder) and Source code (src folder).
+
+### Docs Folder
+
+it contains the generic documentation of the project like Gemini.md files to configure the AI code developer agents.
+
+- **Gemini.md Files Hierarchy** - for more details, see:  [https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md#context-files-hierarchical-instructional-context]
+- **Gemini CLi Integration with VS Code** - see more details here:  [https://github.com/google-gemini/gemini-cli/blob/main/docs/ide-integration.md]
+
+### IaC Folder
+
+This folder contains all scripts needed to deploy the artifact like REST API to target environment using Terraform.
+
+### Scripts Folder
+
+this folder contains all required powershell scripts that are useful for the repository.
+
+### Src Folder
+
 inside src folder, the code is organized in the following way:
 
-* Domain: it contains the business logic (aka: the domain library) and the infrastructure library for the specific-domain-related concepts, like persistence.
-* Infrastructure: it contins all needed libraries related to cross topic and not to business logic.
-* WebApi: it contains the source code fro REST api to provide a port for the domain
-* Clients: if needed, it contains the clients for Web Api.
+- Domain: it contains the business logic (aka: the domain library), the application layer and infrastructure library for the specific-domain-related concepts, like persistence.
+- Infrastructure: it contains all needed libraries related to cross topic and not to business logic.
+- WebApi: it contains the source code fro REST api to provide a port for the domain
+- Clients: if needed, it contains the clients for Web Api.
 
-## Gemini CLI configuration
-
-### Gemini.md Files Hierarchy
-
-for more details, see:  [https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md#context-files-hierarchical-instructional-context]
-
-### Gemini CLi Integration with VS Code
-
-see more details here:  [https://github.com/google-gemini/gemini-cli/blob/main/docs/ide-integration.md]

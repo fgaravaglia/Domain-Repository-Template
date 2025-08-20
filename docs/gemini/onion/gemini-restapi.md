@@ -4,17 +4,15 @@ This comprehensive guide demonstrates how to implement RESTful APIs following On
 
 ## 1. Presentation Layer Architecture
 
-### API Layer Positioning in Onion Architecture
-
 ```txt
 ┌─────────────────────────────────────────────┐
 │              Web API (Presentation)         │ ← Controllers, DTOs, Middleware
 │  ┌─────────────────────────────────────────┐ │
-│  │           Infrastructure               │ │ ← Repositories, External Services
-│  │  ┌─────────────────────────────────────┐ │ │
-│  │  │           Application              │ │ │ ← Use Cases, Commands/Queries
+│  │           Infrastructure                │ │ ← Repositories, External Services
+│  │  ┌────────────────────────────────────┐ │ │
+│  │  │           Application                │ │ │ ← Use Cases, Commands/Queries
 │  │  │  ┌─────────────────────────────────┐ │ │ │
-│  │  │  │           Domain               │ │ │ │ ← Business Logic, Entities
+│  │  │  │           Domain                │ │ │ │ ← Business Logic, Entities
 │  │  │  └─────────────────────────────────┘ │ │ │
 │  │  └─────────────────────────────────────┘ │ │
 │  └─────────────────────────────────────────┘ │
@@ -22,47 +20,6 @@ This comprehensive guide demonstrates how to implement RESTful APIs following On
 
 API Dependencies: Presentation → Application → Domain
 ```
-
-### Core Principles for REST API Design
-
-**API Layer Responsibilities:**
-
-- HTTP request/response handling
-- Input validation and model binding
-- Authentication and authorization
-- Response formatting and status codes
-- Error handling and exception mapping
-- **Keep Controllers Thin:** Controllers are the entry point for HTTP requests. Their job is to:
-    1. Parse the incoming request (model binding).
-    2. Call the appropriate application or domain service to execute the business logic.
-    3. Map the result back to an HTTP response.
-- Do not place any business logic inside controllers.
-
-**What API Layer Should NOT Do:**
-
-- Business logic processing
-- Direct database access
-- Complex data transformations
-- Business rule validation (beyond input format)
-
-### Data Transfer Objects (DTOs) Principles
-
-- **NEVER expose domain entities directly to the client.**
-- Always use Data Transfer Objects (DTOs) for request bodies and response payloads.
-- Create specific DTOs for each use case (e.g., `CreateUserRequest`, `UserResponse`).
-- Use libraries like AutoMapper for mapping between entities and DTOs, but manual mapping is also acceptable for simple cases.
-
-### API Conventions
-
-- **Return Types:** Use `ActionResult<T>` as the return type for controller actions to allow for standard HTTP status code responses.
-- **HTTP Status Codes:** Use standard codes correctly:
-  - `200 OK` for successful GET requests.
-  - `201 Created` for successful POST requests that create a resource. Include a `Location` header.
-  - `204 NoContent` for successful PUT, PATCH, or DELETE requests.
-  - `400 BadRequest` for client-side validation errors.
-  - `404 NotFound` when a requested resource does not exist.
-- **Routing:** Use attribute-based routing on controllers (`[Route("api/[controller]")]`).
-- **Error Handling:** Implement a global exception handler middleware to catch unhandled exceptions and return a standardized `500 Internal Server Error` response.
 
 ## 2. Project Structure for REST API
 
@@ -80,47 +37,62 @@ dotnet add reference ../YourCompany.YourDomain.Infrastructure/YourCompany.YourDo
 
 ### API Project Structure
 
+Architettura Feature-Based: each feature (example: CUstomer, orders, products) is organized as a module self-contained in the API layer.
+
 ``` txt
 API/
 ├── Controllers/
 │   ├── V1/
-│   │   ├── CustomersController.cs
-│   │   ├── OrdersController.cs
-│   │   └── ProductsController.cs
-│   └── V2/
-│       └── CustomersV2Controller.cs
-├── DTOs/
-│   ├── Requests/
-│   │   ├── CreateCustomerRequest.cs
-│   │   ├── UpdateOrderRequest.cs
-│   │   └── PlaceOrderRequest.cs
-│   ├── Responses/
-│   │   ├── CustomerResponse.cs
-│   │   ├── OrderResponse.cs
-│   │   └── ApiResponse.cs
-│   └── Common/
-│       ├── PaginatedResponse.cs
-│       └── ValidationErrorResponse.cs
-├── Middleware/
-│   ├── ExceptionHandlingMiddleware.cs
-│   ├── RequestLoggingMiddleware.cs
-│   └── RateLimitingMiddleware.cs
-├── Filters/
-│   ├── ValidationFilter.cs
-│   ├── AuthorizationFilter.cs
-│   └── ModelStateValidationFilter.cs
-├── Validators/
-│   ├── CreateCustomerRequestValidator.cs
-│   └── PlaceOrderRequestValidator.cs
-├── Mappings/
-│   ├── CustomerMappingProfile.cs
-│   └── OrderMappingProfile.cs
-├── Extensions/
-│   ├── ServiceCollectionExtensions.cs
-│   └── ApplicationBuilderExtensions.cs
+│       ├── Customers/
+│       │   ├── DTOs/
+│       │   │   ├── CreateCustomerRequest.cs
+│       │   │   ├── UpdateCustomerRequest.cs
+│       │   │   └── CustomerResponse.cs
+│       │   ├── Validators/
+│       │   │   ├── CreateCustomerValidator.cs
+│       │   │   └── UpdateCustomerValidator.cs
+│       │   ├── Mappings/
+│       │   │   └── CustomerMappingProfile.cs
+│       │   └── CustomersController.cs
+│       ├── Orders/
+│       │   ├── DTOs/
+│       │   │   ├── PlaceOrderRequest.cs
+│       │   │   ├── UpdateOrderRequest.cs
+│       │   │   └── OrderResponse.cs
+│       │   ├── Validators/
+│       │   │   ├── PlaceOrderValidator.cs
+│       │   │   └── UpdateOrderValidator.cs
+│       │   ├── Mappings/
+│       │   │   └── OrderMappingProfile.cs
+│       │   └── OrdersController.cs
+│       ├── Products/
+│           ├── DTOs/
+│           │   ├── CreateProductRequest.cs
+│           │   └── ProductResponse.cs
+│           ├── Validators/
+│           │   └── CreateProductValidator.cs
+│           ├── Mappings/
+│           │   └── ProductMappingProfile.cs
+│           └── ProductsController.cs
+├── Common/
+│   ├── DTOs/
+│   │   ├── ApiResponse.cs
+│   │   ├── PaginatedResponse.cs
+│   │   └── ValidationErrorResponse.cs
+│   ├── Middleware/
+│   │   ├── ExceptionHandlingMiddleware.cs
+│   │   ├── RequestLoggingMiddleware.cs
+│   │   └── RateLimitingMiddleware.cs
+│   ├── Filters/
+│   │   ├── ValidationActionFilter.cs
+│   │   └── ModelStateValidationFilter.cs
+│   └── Extensions/
+│       ├── ServiceCollectionExtensions.cs
+│       └── ApplicationBuilderExtensions.cs
 ├── Configuration/
 │   ├── SwaggerConfiguration.cs
-│   └── CorsConfiguration.cs
+│   ├── CorsConfiguration.cs
+│   └── ApiVersioningConfiguration.cs
 ├── Program.cs
 └── appsettings.json
 ```
