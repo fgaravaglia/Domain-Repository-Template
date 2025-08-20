@@ -132,8 +132,6 @@ function Set-ResourceConfiguration {
   - Return modified/created object with `-PassThru`
   - Use verbose/warning for status updates
 
-### Example
-
 ```powershell
 function Update-ResourceStatus {
     [CmdletBinding()]
@@ -260,7 +258,7 @@ function Remove-UserAccount {
 
 ## Documentation and Style
 
-- **Comment-Based Help:** Include comment-based help for any public-facing function or cmdlet. Inside the function, add a `<# ... #>` help comment with at least:
+- **Comment-Based Help:** Include english comment-based help for any public-facing function or cmdlet. Inside the function, add a `<# ... #>` help comment with at least:
   - `.SYNOPSIS` Brief description
   - `.DESCRIPTION` Detailed explanation
   - `.EXAMPLE` sections with practical usage
