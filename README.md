@@ -2,6 +2,14 @@
 
 Put here the description of the repository
 
+## Technology Stack
+
+- **Backend**: dotnet
+- **Frontend**: [tecnologie frontend]  
+- **Database**: [database utilizzato]
+- **Deployment**: Azure Devops
+- **Infrastructure**: Terraform
+
 ## Repository Structure
 
 this repository has the following structure:
@@ -23,11 +31,11 @@ Repository/
 |   |   |-- Umbrella.Infrastructure
 |   |   |   |-- Umbrella.Infrastructure.csproj
 |   |-- WebApi/
-|   |   |-- Umbrella.Authentication.WebApi/
-|   |   |   |-- Umbrella.Authentication.WebApi.csproj
+|   |   |-- Umbrella.Domain.WebApi/
+|   |   |   |-- Umbrella.Domain.WebApi.csproj
 |   |-- Clients/
-|       |-- Umbrella.Authentication.WebApi.Client/
-|           |-- Umbrella.Authentication.WebApi.Client.csproj
+|       |-- Umbrella.Domain.WebApi.Client/
+|           |-- Umbrella.Domain.WebApi.Client.csproj
 ```
 
 it is divided into documentation (docs folder), script (scripts folder) and Source code (src folder).
@@ -55,4 +63,3 @@ inside src folder, the code is organized in the following way:
 - Infrastructure: it contains all needed libraries related to cross topic and not to business logic.
 - WebApi: it contains the source code fro REST api to provide a port for the domain
 - Clients: if needed, it contains the clients for Web Api.
-

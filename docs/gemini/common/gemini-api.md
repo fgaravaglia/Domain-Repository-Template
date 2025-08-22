@@ -50,6 +50,16 @@ applyTo: '**/*.cs, **/*.json'
 - Demonstrate how to organize code using feature folders or domain-driven design principles.
 - Show proper separation of concerns with models, services, and data access layers.
 - Explain the Program.cs and configuration system in ASP.NET Core 9 including environment-specific settings.
+- add these nuget packages to the project:
+  - Microsoft.AspNetCore.Authentication.JwtBearer
+  - Microsoft.AspNetCore.Mvc.Versioning
+  - Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer
+  - Swashbuckle.AspNetCore
+  - Serilog.AspNetCore
+  - Serilog.Sinks.Console
+  - Serilog.Sinks.File
+  - Asp.Versioning.Mvc
+  - Asp.Versioning.ApiExplorer
 
 ## API Project Structure
 
@@ -57,7 +67,7 @@ Architettura Feature-Based: each feature (example: CUstomer, orders, products) i
 
 ``` txt
 API/
-├── Controllers/
+├── Areas/
 │   ├── V1/
 │       ├── Customers/
 │       │   ├── DTOs/
@@ -200,3 +210,258 @@ API/
 - Demonstrate deployment to Azure App Service, Azure Container Apps, or other hosting options.
 - Show how to implement health checks and readiness probes.
 - Explain environment-specific configurations for different deployment stages.
+
+## Code Samples and Scaffolded Items
+
+### Base Controller with Common Functionality
+
+```csharp
+namespace YourCompany.YourDomain.API.Controllers.Common;
+
+/// <summary>
+/// Base controller providing common functionality for all API controllers.
+/// Implements standard patterns for error handling, response formatting, and logging.
+/// </summary>
+[ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
+[Produces("application/json")]
+[ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
+[ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
+public abstract class BaseApiController : ControllerBase
+{
+    protected readonly IMediator Mediator;
+    protected readonly IMapper Mapper;
+    protected readonly ILogger Logger;
+
+    protected BaseApiController(IMediator mediator, IMapper mapper, ILogger logger)
+    {
+        Mediator = mediator;
+        Mapper = mapper;
+        Logger = logger;
+    }
+
+    /// <summary>
+    /// Creates a success response with data and optional pagination information.
+    /// </summary>
+    /// <typeparam name="T">The type of data being returned.</typeparam>
+    /// <param name="data">The data to include in the response.</param>
+    /// <param name="message">Optional success message.</param>
+    /// <returns>Formatted API response with success status.</returns>
+    protected ActionResult<ApiResponse<T>> SuccessResponse<T>(T data, string? message = null)
+    {
+        var response = new ApiResponse<T>
+        {
+            Success = true,
+            Data = data,
+            Message = message ?? "Operation completed successfully",
+            Timestamp = DateTime.UtcNow
+        };
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Creates a paginated success response for collection data.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <param name="data">The collection data.</param>
+    /// <param name="pageNumber">Current page number.</param>
+    /// <param name="pageSize">Number of items per page.</param>
+    /// <param name="totalCount">Total number of items available.</param>
+    /// <returns>Formatted paginated API response.</returns>
+    protected ActionResult<PaginatedResponse<T>> PaginatedResponse<T>(
+        IEnumerable<T> data,
+        int pageNumber,
+        int pageSize,
+        int totalCount)
+    {
+        var response = new PaginatedResponse<T>
+        {
+            Success = true,
+            Data = data,
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalCount = totalCount,
+            TotalPages = (int)Math.Ceiling((double)totalCount / pageSize),
+            HasNextPage = pageNumber * pageSize < totalCount,
+            HasPreviousPage = pageNumber > 1,
+            Timestamp = DateTime.UtcNow
+        };
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Creates a created response for resource creation operations.
+    /// </summary>
+    /// <typeparam name="T">The type of created resource.</typeparam>
+    /// <param name="data">The created resource data.</param>
+    /// <param name="location">The location of the created resource.</param>
+    /// <returns>HTTP 201 Created response with location header.</returns>
+    protected ActionResult<ApiResponse<T>> CreatedResponse<T>(T data, string location)
+    {
+        var response = new ApiResponse<T>
+        {
+            Success = true,
+            Data = data,
+            Message = "Resource created successfully",
+            Timestamp = DateTime.UtcNow
+        };
+
+        return Created(location, response);
+    }
+
+    /// <summary>
+    /// Handles common exceptions and converts them to appropriate HTTP responses.
+    /// </summary>
+    /// <param name="exception">The exception to handle.</param>
+    /// <returns>Appropriate HTTP error response.</returns>
+    protected ActionResult HandleException(Exception exception)
+    {
+        return exception switch
+        {
+            ValidationException validationEx => BadRequest(new ValidationErrorResponse
+            {
+                Success = false,
+                Message = "Validation failed",
+                Errors = validationEx.Errors.ToDictionary(x => x.PropertyName, x => x.ErrorMessage),
+                Timestamp = DateTime.UtcNow
+            }),
+
+            NotFoundException notFoundEx => NotFound(new ApiErrorResponse
+            {
+                Success = false,
+                Message = notFoundEx.Message,
+                ErrorCode = "RESOURCE_NOT_FOUND",
+                Timestamp = DateTime.UtcNow
+            }),
+
+            UnauthorizedAccessException => Unauthorized(new ApiErrorResponse
+            {
+                Success = false,
+                Message = "Access denied",
+                ErrorCode = "UNAUTHORIZED",
+                Timestamp = DateTime.UtcNow
+            }),
+
+            DomainException domainEx => BadRequest(new ApiErrorResponse
+            {
+                Success = false,
+                Message = domainEx.Message,
+                ErrorCode = "BUSINESS_RULE_VIOLATION",
+                Timestamp = DateTime.UtcNow
+            }),
+
+            _ => StatusCode(StatusCodes.Status500InternalServerError, new ApiErrorResponse
+            {
+                Success = false,
+                Message = "An unexpected error occurred",
+                ErrorCode = "INTERNAL_SERVER_ERROR",
+                Timestamp = DateTime.UtcNow
+            })
+        };
+    }
+}
+```
+
+### Common/Extensions
+
+in the folder 'Common/Extensions' you need to generate the classes to manage Dependency Injections and Application builder.
+Here you find some examples:
+
+```csharp
+namespace Umbrella.Domain.WebApi.Common.Extensions;
+
+/// <summary>
+/// Extension methods for setting up presentation-layer services in an <see cref="IServiceCollection"/>.
+/// </summary>
+public static class ServiceCollectionExtensions
+{
+    /// <summary>
+    /// Adds presentation-layer services to the service collection.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> to add services to.</param>
+    /// <returns>The same service collection so that multiple calls can be chained.</returns>
+    public static IServiceCollection AddPresentationServices(this IServiceCollection services)
+    {
+        services.AddControllers();
+        services.AddProblemDetails();
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
+        return services;
+    }
+}
+```
+
+```csharp
+using Umbrella.Domain.WebApi.Common.Middleware;
+
+namespace Umbrella.Domain.WebApi.Common.Extensions;
+
+/// <summary>
+/// Extension methods for setting up the middleware pipeline.
+/// </summary>
+public static class ApplicationBuilderExtensions
+{
+    /// <summary>
+    /// Configures the middleware pipeline for the application.
+    /// </summary>
+    /// <param name="app">The <see cref="WebApplication"/> to configure.</param>
+    /// <returns>The same application builder so that multiple calls can be chained.</returns>
+    public static WebApplication UsePresentationServices(this WebApplication app)
+    {
+        // Register the global exception handling middleware first.
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        return app;
+    }
+}
+
+```
+
+### Configuration
+
+here you have samples of classes to add to manage specific configuration of REST Api.
+
+- **SwaggerConfiguration.cs** - Questa classe statica conterrà due metodi di estensione:
+  1. AddSwaggerServices: Includerà la configurazione di services.AddSwaggerGen(). Aggiungerò anche la configurazione per il supporto dell'autenticazione JWT (Bearer Token) direttamente nell'interfaccia utente di Swagger, rendendola molto più utile per testare gli endpoint sicuri.
+  2. UseSwaggerMiddleware: Includerà la configurazione di app.UseSwagger() e app.UseSwaggerUI(), mantenendo la logica per abilitarlo solo in ambiente di sviluppo.
+- **CorsConfiguration.cs** - La classe conterrà due metodi di estensione:
+    1. AddCorsServices: Aggiungerà i servizi CORS al container DI. Definirà una policy CORS nominata (es. "DefaultPolicy") che leggerà le origini consentite dal file appsettings.json. Questo la renderà flessibile per diversi ambienti (sviluppo, produzione, etc.).
+    2. UseCorsMiddleware: Applicherà la policy CORS definita alla pipeline di middleware dell'applicazione.
+- **ApiVersioningConfiguration.cs** - La classe conterrà un metodo di estensione statico AddApiVersioningServices. Questo metodo configurerà il versioning delle API, impostando la versione predefinita e abilitando l'esplorazione delle API versionate per l'integrazione con Swagger.
+
+### Program.cs
+
+THe program.cs file must ve as smallest and Cleanest as possible. Here the example:
+
+```csharp
+using Umbrella.Authentication.Application;
+using Umbrella.Authentication.Infrastructure;
+using Umbrella.Authentication.WebApi.Common.Extensions;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services from all layers to the container.
+builder.Services
+    .AddApplicationServices()
+    .AddInfrastructureServices(builder.Configuration)
+    .AddPresentationServices();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+app.UsePresentationServices();
+
+app.Run();
+```
