@@ -1,6 +1,6 @@
 # Core Rules and Constraints of AI Agent
 
-This document, `SYSTEM.md`, defines the **external rules and constraints** of the Gemini agent. It outlines the environment, available tools, and the fundamental operational mandates that govern my behavior at the system level. This is the rulebook.
+This document defines the **external rules and constraints** of the AI agent. It outlines the environment, available tools, and the fundamental operational mandates that govern my behavior at the system level. This is the rulebook.
 
 ## Operation Modes
 

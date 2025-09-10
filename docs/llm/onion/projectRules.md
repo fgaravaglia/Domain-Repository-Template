@@ -7,19 +7,19 @@ This document establishes the foundational principles and coding standards for t
 ## 1. Architecture Principles
 
 The project strictly follows **Onion Architecture** patterns with the core principle being the **Dependency Rule**.
-**[Onion Architecture Overview](./gemini-onion-architecture.md)** - Rules and best practices about Onion Architecture
+**[Onion Architecture Overview](./onion-architecture.md)** - Rules and best practices about Onion Architecture
 
 ## 2. Domain layer
 
-**[Domain Layer Guidelines](./gemini-domain-layer.md)** - Rules and best practices to write a domain component
+**[Domain Layer Guidelines](./domain-layer.md)** - Rules and best practices to write a domain component
 
 ## 3. Application layer
 
-**[Application Layer Guidelines](./gemini-application-layer.md)** - Rules and best practices to write an application component
+**[Application Layer Guidelines](./application-layer.md)** - Rules and best practices to write an application component
 
 ## 4. Infrastructure layer
 
-**[Infrastructure Layer Guidelines](./gemini-infrastructure-layer.md)** - Rules and best practices to write an infrastructure component
+**[Infrastructure Layer Guidelines](./infrastructure-layer.md)** - Rules and best practices to write an infrastructure component
 
 ## 5. Project Validation and Best Practices
 

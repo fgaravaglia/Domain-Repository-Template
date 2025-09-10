@@ -4,7 +4,7 @@ Clear-Host
 
 # Definisce le scelte per l'utente
 $title = "Selezione del Tipo di Repository"
-$message = "Scegli il tipo di progetto che vuoi configurare. Questa azione sposterà il file README corretto nella root del progetto."
+$message = "Scegli il tipo di progetto che vuoi configurare con Gemini. Questa azione sposterà il file README corretto nella root del progetto."
 
 $choices = [System.Management.Automation.Host.ChoiceDescription[]](
     New-Object System.Management.Automation.Host.ChoiceDescription("&Microservizio", "Configura il repository per un microservizio."),
@@ -43,7 +43,7 @@ switch ($choiceIndex) {
 Write-Host "Hai selezionato: $selection"
 
 # Definisce i percorsi completi
-$sourceFilePath = Join-Path $projectRoot "docs" "gemini" $sourceFileName
+$sourceFilePath = Join-Path $projectRoot "docs" "llm" $sourceFileName
 $destinationFilePath = Join-Path $projectRoot "gemini.md"
 
 # Controlla se il file di origine esiste

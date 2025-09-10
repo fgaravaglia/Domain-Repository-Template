@@ -2,7 +2,7 @@
 
 this document explain the best practices specifically for dotnet in order to interact with Cloud Run service.
 
-# Calling an authenticated Cloud Run service
+## Calling an authenticated Cloud Run service
 
 This instruction demonstrates authenticated service to service calls using an ID token with Cloud Run. The use case is: "Service A" (this service) -> "Service B" (Authenticated).
 
@@ -86,4 +86,3 @@ then:
     export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcloud/application_default_credentials.json
     ```
 this command will print an Url to be open to login as developer. then, a credential json file will be saved locally, to be loaded in the Environment variable.
-

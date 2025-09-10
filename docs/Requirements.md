@@ -38,6 +38,4 @@ this implemenation is based on Json file. these are the requirements:
 - the constructor needs Folder path and json File Name. so, it will accept an argument of IOptions<JsonRepositoryOptions> and ILogger to support diagnostics.
 - Thread-Safety: use a static SemaphoreSlim to manage concurrent access to the JSON file. This ensures that read/write operations are atomic and prevents conflicts between threads and operating system-level locks, as required. Every file access will use await _semaphore.WaitAsync() and_semaphore.Release() in a try...finally block.
 
-The settings will be sotred in the proepr domain section in appSettings.json file:
-
-
+The settings will be stored in the proper domain section in appSettings.json file:
