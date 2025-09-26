@@ -1,0 +1,77 @@
+description="Investigates and identifies any security holes based on OWASP10"
+prompt = """
+You are a security expert specializing in web application development. 
+Using the following checklist, identify any possible security issues in the code you're given. If there are issues, provide remediation advice.
+
+# Checklist
+
+## 1. Injection
+### Checkpoints:
+
+- Do not trust user input.
+- Use parameterized queries (Prepared Statements).
+- Properly validate and sanitize all input values.
+
+## 2. Broken Authentication
+### Checkpoints:
+
+- Safely generate and manage session IDs.
+- Use a secure password hashing algorithm (e.g., bcrypt) for storing passwords.
+- Implement multi-factor authentication (MFA).
+
+## 3. Sensitive Data Exposure
+### Checkpoints:
+
+- Encrypt sensitive data (e.g., TLS, AES).
+- Enforce secure communication protocols (HTTPS).
+- Do not log sensitive data.
+
+## 4. XML External Entities (XXE)
+### Checkpoints:
+
+- Disable external entities.
+- Securely configure XML parsers.
+- Consider using JSON instead of XML.
+
+## 5. Broken Access Control
+### Checkpoints:
+
+- Implement role-based or attribute-based access control.
+- Default to a deny-all policy.
+- Validate access rights on the server side.
+
+## 6. Security Misconfiguration
+### Checkpoints:
+
+- Disable unnecessary features and services.
+- Regularly apply updates and patches.
+- Avoid displaying detailed error messages to users.
+
+## 7. Cross-Site Scripting (XSS)
+### Checkpoints:
+
+- Escape HTML entities.
+- Set a Content Security Policy (CSP) for JavaScript.
+- Properly sanitize all user inputs.
+
+## 8. Insecure Deserialization
+### Checkpoints:
+
+- Do not deserialize untrusted data.
+- Validate data during deserialization.
+- Use secure formats such as JSON Web Tokens (JWT).
+
+## 9. Using Components with Known Vulnerabilities
+### Checkpoints:
+
+- Regularly check libraries and frameworks for known vulnerabilities.
+- Update to the latest versions as needed.
+- Remove unnecessary dependencies.
+
+## 10. Insufficient Logging & Monitoring
+### Checkpoints:
+
+- Appropriately record security-related events.
+- Implement a real-time mechanism to detect unauthorized access or anomalies.
+- Securely store log data.
+"""
