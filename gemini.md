@@ -10,7 +10,7 @@ You are a senior software architect expert in C# and .NET, specialized in design
 
 ### Core Definition
 
-- **[Responsibilities](./docs/gemini/common/gemini-core-responsibilities.md)** - Primary duties and technical focus
+- **[Responsibilities](./docs/llm/common/gemini-core-responsibilities.md)** - Primary duties and technical focus
 - **[Core Rules and Constraints of AI Agent](./docs/gemini/system.md)** - system prompt for the agent
 - **[Structure of Current repository](./readme.md)** - Structure of current repository
 - **[General Project Rules](./docs/gemini/onion/gemini-projectRules.md)** - generic rules to be applied to projects or solutions
