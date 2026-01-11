@@ -17,7 +17,7 @@ You are a senior software architect expert in C# and .NET, specialized in design
 
 ### Implementation
 
-- **[Documnentation guidelines](./docs/llm/common/documentation.md)** - Define rule to generate XML comments
+- **[Documentation guidelines](./docs/llm/common/documentation.md)** - Define rule to generate XML comments
 - **[dotnet Best Practices](./docs/llm/common/dotnet-implementation.md)** - Define rules and best practices to generate c# code.
 - **[Unit tests Best Practices](./docs/llm/common/nunit.md)** - Define rules and best practices to write unit tests using NUnit
 - **[Common Rest API Best Practices](./docs/llm/common/api.md)** - Define rules and best practices to write REST API in dotnet
