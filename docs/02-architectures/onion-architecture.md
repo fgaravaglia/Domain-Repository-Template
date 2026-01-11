@@ -28,13 +28,12 @@ Onion Architecture represents a revolutionary approach to software design that p
 
 ### The Dependency Rule - The Golden Law
 
-**Fundamental Principle:** Dependencies flow inward only, never outward. Outer layers depend on inner layers, never the reverse.
-**Critical Understanding:**
-
-- **Domain Layer:** Pure business logic with zero external dependencies
-- **Application Layer:** Orchestrates domain operations using abstractions
-- **Infrastructure Layer:** Implements abstractions defined by inner layers
-- **Presentation Layer:** Coordinates user interactions through application services
+- **Fundamental Principle:** Dependencies flow inward only, never outward. Outer layers depend on inner layers, never the reverse.
+- **Critical Understanding:**
+  - **Domain Layer:** Pure business logic with zero external dependencies
+  - **Application Layer:** Orchestrates domain operations using abstractions
+  - **Infrastructure Layer:** Implements abstractions defined by inner layers
+  - **Presentation Layer:** Coordinates user interactions through application services
 
 ## Layer Interaction Patterns
 
@@ -64,6 +63,7 @@ Onion Architecture represents a revolutionary approach to software design that p
 - **Pure Business Logic:** Only domain concepts
 - **High Cohesion:** Related business concepts grouped together
 - **Stable:** Changes rarely due to external factors
+
 
 ### Application Layer (Orchestration)
 
@@ -134,15 +134,15 @@ Problems:
 The **Onion Architecture** solves some of them:
 
 ```txt
-                    ┌─────────────────────────────────┐
-                    │         Infrastructure         │ ← Implements abstractions
-                    │  ┌─────────────────────────────┐ │
-                    │  │        Application          │ ← Orchestrates use cases
-                    │  │  ┌─────────────────────────┐ │ │
-                    │  │  │        Domain           │ │ │ ← Pure business logic
-                    │  │  └─────────────────────────┘ │ │
-                    │  └─────────────────────────────┘ │
-                    └─────────────────────────────────┘
+┌───────────────────────────────────┐
+│         Infrastructure            │ ← Implements abstractions
+│  ┌──────────────────────────────┐ │
+│  │        Application           │ ← Orchestrates use cases
+│  │  ┌─────────────────────────┐ │ │
+│  │  │        Domain           │ ← Pure business logic
+│  │  └─────────────────────────┘ │ │
+│  └──────────────────────────────┘ │
+└───────────────────────────────────┘
 
 Dependency Flow:
 Infrastructure → Application → Domain

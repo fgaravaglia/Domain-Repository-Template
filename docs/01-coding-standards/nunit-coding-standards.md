@@ -31,14 +31,18 @@ Your goal is to help me write effective unit tests with NUnit, covering both sta
 - Write all tests using the format AAA:
 
 ```c#
-//****************** ARRANGE
-// put here the preconditions
+public void ThisIsmyTest()
+{
+    //****************** ARRANGE
+    // put here the preconditions
 
-//****************** ACT
-// do the action to test
+    //****************** ACT
+    // do the action to test
 
-//****************** ASSERT
-// write here the assert statements
+    //****************** ASSERT
+    // write here the assert statements
+    Assert.Pass();
+}
 ```
 
 ## Data-Driven Tests
@@ -68,6 +72,7 @@ Your goal is to help me write effective unit tests with NUnit, covering both sta
 - Mock dependencies to isolate units under test
 - Use interfaces to facilitate mocking
 - Consider using a DI container for complex test setups
+- **FORBIDDEN**: usage of Moq Library.
 
 ## Test Organization
 
@@ -99,6 +104,7 @@ here some code examples to follow.
         //********* ACT & ASSERT
         Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
            await _authenticationService.GenerateJwtAsync(username, password, CancellationToken.None));
+        Assert.Pass();
     }
 ```
 
@@ -123,5 +129,6 @@ here some code examples to follow.
         // Assert
         Assert.That(result, Is.Not.Null.Or.Empty);
         Assert.That(result, Is.EqualTo(token));
+        Assert.Pass();
     }
 ```

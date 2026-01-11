@@ -1,17 +1,20 @@
 # Infrastructure Layer Project Setup
 
-You are operating in the generic Infrastructure layer. Here, you will create reusable, cross-cutting components that are not tied to the specific business logic.
+You are operating within the Infrastructure Layer. This layer provides concrete implementations for the abstractions defined in the Domain and Application layers. It handles communication with databases, cloud providers, and external services.
 
-## Infrastructure Rules
+## Strategy: Architectural Rules
 
-1. **Domain Agnostic**: The code in this project **MUST NOT** have any knowledge of or dependency on the `Umbrella.Authentication.Domain` project. It must provide generic functionalities.
-2. **Cross-Cutting Services**: Implement services for features such as:
-    * Logging
-    * Caching
-    * Email sending
-    * Event/Message bus
-3. **Abstractions**: Define interfaces for the services you implement (e.g., `ILoggingService`, `ICacheProvider`) to allow the DI container to easily swap implementations.
-4. **Configuration**: Provide extension methods for `IServiceCollection` to register the services from this layer in the main application's DI container.
+- Implementation Only: This layer should only contain implementation details. It depends on Domain and Application, but no other layer should depend on Infrastructure.
+- Domain-Agnostic Core: While some implementations are project-specific (e.g., a specific Repository), general infrastructure (Logging, Messaging) should be kept as generic as possible.
+- Cross-Cutting Services: Implement services for features such as:
+  - Logging
+  - Caching
+  - Email sending
+  - Event/Message bus
+- Abstractions: Define interfaces for the services you implement (e.g., `ILoggingService`, `ICacheProvider`) to allow the DI container to easily swap implementations.
+- Configuration: Provide extension methods for `IServiceCollection` to register the services from this layer in the main application's DI container.
+- Resilience: Implement retry patterns (Polly) and circuit breakers for all external I/O operations.
+- Cloud-Native: Design implementations to be easily swappable between cloud providers (e.g., GCP Pub/Sub vs AWS SNS/SQS).
 
 ## Project Creation and Configuration
 
@@ -51,46 +54,33 @@ dotnet add reference ../YourCompany.YourDomain.Application/YourCompany.YourDomai
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="FluentEmail.Core" Version="3.0.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <!-- Cloud & Data Providers -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.7.4" />
+    <PackageReference Include="SendGrid" Version="9.28.1" />
+    <!-- Resilience -->
+    <PackageReference Include="Polly" Version="8.2.0" />
   </ItemGroup>
 
 </Project>
 ```
 
-## Infrastructure Layer Structure
+- ✅ References to both Domain and Application projects
+- ✅ External service packages
+- ✅ Database and caching packages
+
+## Folder Structure (By Concern)
 
 ```txt
 Infrastructure/
-├── Data/
-│   ├── Configurations/
-│   │   ├── OrderConfiguration.cs
-│   │   └── CustomerConfiguration.cs
-│   ├── Repositories/
-│   │   ├── OrderRepository.cs
-│   │   ├── CustomerRepository.cs
-│   │   └── GenericRepository.cs
-│   ├── ApplicationDbContext.cs
-│   └── UnitOfWork.cs
-├── Services/
-│   ├── EmailService.cs
-│   ├── PaymentService.cs
-│   └── ExternalApiService.cs
-├── External/
-│   ├── PaymentGateway/
-│   │   ├── StripePaymentService.cs
-│   │   └── PayPalPaymentService.cs
-│   └── Notifications/
-│       ├── SendGridEmailService.cs
-│       └── TwilioSmsService.cs
-├── Caching/
-│   ├── RedisCacheService.cs
-│   └── InMemoryCacheService.cs
-├── Messaging/
-│   ├── RabbitMqEventBus.cs
-│   └── AzureServiceBusEventBus.cs
-└── DependencyInjection.cs
+├── Persistence/       # EF Core, Dapper, or NoSQL Implementations
+│   ├── Configurations/ # EF Fluent API mappings
+│   ├── Repositories/   # Repository implementations
+│   └── AppDbContext.cs
+├── Messaging/         # Service Bus, RabbitMQ, or Cloud Pub/Sub
+├── Identity/          # JWT, IdentityServer, or Auth0
+├── Services/          # Concrete external services (Email, Storage)
+└── DependencyInjection.cs # Service registration logic
 ```
 
 ## Infrastructure Implementation Examples
