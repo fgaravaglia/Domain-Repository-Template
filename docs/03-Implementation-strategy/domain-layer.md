@@ -69,6 +69,11 @@ dotnet add package Microsoft.Extensions.DependencyInjection.Abstractions
 </Project>
 ```
 
+* ✅ No project references allowed
+* ✅ Only abstraction packages (Microsoft.Extensions.DependencyInjection.Abstractions)
+* ❌ No Entity Framework references
+* ❌ No ASP.NET Core references
+
 ## Domain Layer Structure
 
 ```txt
@@ -104,124 +109,4 @@ Domain/
 └── Specifications/
     ├── CustomerEligibilitySpec.cs
     └── OrderValidationSpec.cs
-```
-
-## Domain Layer Implementation Examples
-
-### Base Entity
-
-```csharp
-namespace YourCompany.YourDomain.Domain.Common;
-
-/// <summary>
-/// Base class for all domain entities with strongly-typed identifiers.
-/// </summary>
-/// <typeparam name="TId">The type of the entity identifier.</typeparam>
-public abstract class Entity<TId> : IEquatable<Entity<TId>>
-    where TId : notnull
-{
-    private readonly List<IDomainEvent> _domainEvents = new();
-
-    /// <summary>
-    /// Gets the unique identifier for this entity.
-    /// </summary>
-    public TId Id { get; protected set; } = default!;
-
-    /// <summary>
-    /// Gets the domain events raised by this entity.
-    /// </summary>
-    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
-
-    /// <summary>
-    /// Adds a domain event to be dispatched when the entity is persisted.
-    /// </summary>
-    /// <param name="domainEvent">The domain event to add.</param>
-    protected void AddDomainEvent(IDomainEvent domainEvent)
-    {
-        _domainEvents.Add(domainEvent);
-    }
-
-    /// <summary>
-    /// Clears all pending domain events.
-    /// </summary>
-    public void ClearDomainEvents()
-    {
-        _domainEvents.Clear();
-    }
-
-    public bool Equals(Entity<TId>? other)
-    {
-        return other is not null && Id.Equals(other.Id);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is Entity<TId> entity && Equals(entity);
-    }
-
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode();
-    }
-}
-```
-
-#### Value Object Example
-
-```csharp
-namespace YourCompany.YourDomain.Domain.ValueObjects;
-
-/// <summary>
-/// Represents a monetary value with currency information.
-/// </summary>
-public sealed class Money : ValueObject
-{
-    /// <summary>
-    /// Gets the monetary amount.
-    /// </summary>
-    public decimal Amount { get; }
-
-    /// <summary>
-    /// Gets the currency code (e.g., "USD", "EUR").
-    /// </summary>
-    public string Currency { get; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Money"/> class.
-    /// </summary>
-    /// <param name="amount">The monetary amount.</param>
-    /// <param name="currency">The currency code.</param>
-    /// <exception cref="ArgumentException">Thrown when currency is null or empty.</exception>
-    public Money(decimal amount, string currency)
-    {
-        if (string.IsNullOrWhiteSpace(currency))
-            throw new ArgumentException("Currency cannot be null or empty.", nameof(currency));
-
-        Amount = amount;
-        Currency = currency.ToUpperInvariant();
-    }
-
-    /// <summary>
-    /// Adds two money values of the same currency.
-    /// </summary>
-    /// <param name="left">The first money value.</param>
-    /// <param name="right">The second money value.</param>
-    /// <returns>A new <see cref="Money"/> instance with the sum.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when currencies don't match.</exception>
-    public static Money operator +(Money left, Money right)
-    {
-        if (left.Currency != right.Currency)
-            throw new InvalidOperationException("Cannot add money with different currencies.");
-
-        return new Money(left.Amount + right.Amount, left.Currency);
-    }
-
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Amount;
-        yield return Currency;
-    }
-
-    public override string ToString() => $"{Amount:C} {Currency}";
-}
 ```

@@ -9,7 +9,6 @@ Your task is to ensure .NET/C# code meets the best practices specific to this so
 **Primary Reference:** [Microsoft C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
 **Mandatory Adherence:** All code must strictly follow Microsoft's established conventions.
 
-
 ## General Instructions
 
 - Make only high confidence suggestions when reviewing code changes.
@@ -17,25 +16,6 @@ Your task is to ensure .NET/C# code meets the best practices specific to this so
 - Handle edge cases and write clear exception handling.
 - For libraries or external dependencies, mention their usage and purpose in comments.
 - Use file-scoped namespaces for cleaner, more readable code.
-
-```csharp
-// ✅ CORRECT - File-scoped namespace
-namespace MyProject.Domain.Services;
-
-public class CustomerService
-{
-    // Implementation
-}
-
-// ❌ INCORRECT - Traditional namespace block
-namespace MyProject.Domain.Services
-{
-    public class CustomerService
-    {
-        // Implementation
-    }
-}
-```
 
 ## Naming Conventions
 
@@ -122,13 +102,6 @@ public class CustomerService
 - Use IConfiguration binding for settings
 - Support appsettings.json configuration files
 
-### Semantic Kernel & AI Integration
-
-- Use Microsoft.SemanticKernel for AI operations
-- Implement proper kernel configuration and service registration
-- Handle AI model settings (ChatCompletion, Embedding, etc.)
-- Use structured output patterns for reliable AI responses
-
 ## Data Access Patterns
 
 - Guide the implementation of a data access layer using Entity Framework Core.
@@ -170,7 +143,7 @@ public class CustomerService
 
 ## Security
 
-- Use C# 12+ features and .NET 8 optimizations where applicable
+- Use C# 13+ features and .NET 8 optimizations where applicable
 - Implement proper input validation and sanitization
 - Use parameterized queries for database operations
 - Follow secure coding practices for AI/ML operations
@@ -180,7 +153,6 @@ public class CustomerService
 - Guide users through containerizing their API using .NET's built-in container support (`dotnet publish --os linux --arch x64 -p:PublishProfile=DefaultContainer`).
 - Explain the differences between manual Dockerfile creation and .NET's container publishing features.
 - Explain CI/CD pipelines for NET applications.
-- Demonstrate deployment to Azure App Service, Azure Container Apps, or other hosting options.
 - Show how to implement health checks and readiness probes.
 - Explain environment-specific configurations for different deployment stages.
 
