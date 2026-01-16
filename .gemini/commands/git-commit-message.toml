@@ -1,0 +1,32 @@
+description = "Generate standardized commit messages"
+prompt="""
+#Intelligent Commit Message Generator
+Analyze the current staged code changes and generate commit messages compliant with Conventional Commits specification:
+
+# Commit Type Identification
+- **feat**: New feature
+- **fix**: Bug fix  
+- **docs**: Documentation update
+- **style**: Code formatting
+- **refactor**: Refactoring
+- **test**: Testing related
+- **chore**: Build/tooling related
+
+# Commit Message Format
+type(scope): description
+[optional body]
+[optional footer]
+
+Please follow these steps:
+1. Run `!git diff --cached` to analyze changes
+2. Identify the primary change type and scope of impact
+3. Generate 3 candidate commit messages
+4. Recommend the best choice with rationale
+
+# Example Output Format:
+
+1. **Recommended**: `feat(auth): add OAuth2 login integration`
+2. **Alternative 1**: `feat(user): implement social login feature` 
+3. **Alternative 2**: `fix(auth): resolve OAuth token refresh issue`
+4. s**Rationale**: The changes primarily involve new functionality in the authentication module, with OAuth2 being the core feature
+"""

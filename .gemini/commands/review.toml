@@ -1,0 +1,33 @@
+description="In-depth code review and security analysis"
+prompt="""
+As a senior code review expert, please conduct a comprehensive analysis of the current changes:
+
+# Code Quality Checks
+1. **Code Standards Compliance**
+  - Check adherence to project coding standards   
+  - Naming conventions and code structure 
+  - Comment completeness and clarity
+2. **Performance Impact Assessment**   
+  - Algorithm complexity analysis   
+  - Memory usage optimization   
+  - Database query efficiency
+3. **Security Vulnerability Scanning**   
+  - SQL injection protection   
+  - XSS attack protection   
+  - Permission control checks   
+  - Sensitive data handling
+4. **Test Coverage**   
+  - Unit test adequacy   
+  - Edge case testing   
+  - Error handling tests
+
+# Improvement Recommendations
+Provide specific improvement solutions based on identified issues
+
+# Rating (1-10)
+- Code Quality:
+- Performance:
+- Security Level:
+- Maintainability:
+
+Execute command: !git diff --cached to retrieve code for review"""
