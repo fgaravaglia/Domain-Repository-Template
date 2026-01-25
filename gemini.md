@@ -16,12 +16,13 @@ Refer To:
 - **Coding Standards**: here you find all best practices and standards to apply to generated code
   - **[Dotnet Best Practices](./docs/01-coding-standards/dotnet-coding-standards.md)** - Define rules and best practices to generate c# code.
   - **[Unit tests Best Practices](./docs/01-coding-standards/nunit-coding-standards.md)** - Define rules and best practices to write unit tests using NUnit
-  - **[Common Rest API Best Practices](./docs/01-coding-standards/api-coding-standard.md)** - Define rules and best practices to write REST API in dotnet
+  - **[dotnet REST API Best Practices](./docs/01-coding-standards/api-coding-standard.md)** - Define rules and best practices to write REST API in dotnet
   - **[Documnentation guidelines](./docs/01-coding-standards/dotnet-documentation-standards.md)** - Define rule to generate XML comments
   - **[PowerShell Cmdlet Development Guidelines](./docs/01-coding-standards/powershell-coding-standards.md)** - Guideines to generate scripts for powershellspecifically
   - **[Terraform Conventions](./docs/01-coding-standards/terraform-coding-standards.md)** - Defines the best practices to generate terraform scripts.
 - **Architectures**:
   - **[Onion Architecture](./docs/02-architectures/onion-architecture.md)** - Rules and best practices about Onion Architecture
+  - **[REST API Best Practices](./docs/02-architectures/api-standards.md)** - Define rules and best practices to write REST API, whatever the technology
 - **Implementation Strategy**: How to apply coding standards and architectural principles
   - Onion Architecture:
     1. **[Domain Layer Guidelines](./docs/03-Implementation-strategy/domain-layer.md)** - Rules and best practices to write a domain component
