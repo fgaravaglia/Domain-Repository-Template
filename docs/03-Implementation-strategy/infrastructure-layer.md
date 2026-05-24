@@ -72,13 +72,15 @@ dotnet add reference ../YourCompany.YourDomain.Application/YourCompany.YourDomai
 ## Folder Structure (By Concern)
 
 ```txt
-Infrastructure/
+Infrastructure
+├── Caching/           # Redis, Memory cache
+├── External/          # HTTP clients, third-party APIs
+├── Identity/          # JWT, IdentityServer, or Auth0
+├── Messaging/         # Service Bus, RabbitMQ, or Cloud Pub/Sub
 ├── Persistence/       # EF Core, Dapper, or NoSQL Implementations
 │   ├── Configurations/ # EF Fluent API mappings
 │   ├── Repositories/   # Repository implementations
 │   └── AppDbContext.cs
-├── Messaging/         # Service Bus, RabbitMQ, or Cloud Pub/Sub
-├── Identity/          # JWT, IdentityServer, or Auth0
 ├── Services/          # Concrete external services (Email, Storage)
 └── DependencyInjection.cs # Service registration logic
 ```

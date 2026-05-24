@@ -28,7 +28,6 @@ You are operating within the Application Layer. This layer orchestrates use case
     <!-- Abstractions & Tooling -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
-    <PackageReference Include="MediatR" Version="12.0.0" />
     <PackageReference Include="FluentValidation" Version="11.8.0" />
   </ItemGroup>
 </Project>
