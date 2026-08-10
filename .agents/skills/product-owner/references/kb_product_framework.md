@@ -1,4 +1,4 @@
-# FRAMEWORK DI DEFINIZIONE DEL PRODOTTO (MODA METHOD)
+# FRAMEWORK DI DEFINIZIONE DEL PRODOTTO
 
 Questo documento guida il processo di trasformazione di un'idea in un prodotto digitale azionabile.
 
