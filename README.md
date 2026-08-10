@@ -16,9 +16,9 @@ this repository has the following structure:
 
 ```txt
 Repository/
-|-- docs/
-|-- IaC/
-|-- scripts/
+|-- docs/                                  => it contains the generic documentation of the project like Gemini.md files to configure the AI code developer agents.
+|-- IaC/                                   => This folder contains all scripts needed to deploy the artifact like REST API to target environment using Terraform.
+|-- scripts/                               => this folder contains all required powershell scripts that are useful for the repository.
 |-- src/
 |   |-- Domain/
 |   |   |-- Umbrella.Authentication.Application/
@@ -39,21 +39,6 @@ Repository/
 ```
 
 it is divided into documentation (docs folder), script (scripts folder) and Source code (src folder).
-
-### Docs Folder
-
-it contains the generic documentation of the project like Gemini.md files to configure the AI code developer agents.
-
-- **Gemini.md Files Hierarchy** - for more details, see:  [https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md#context-files-hierarchical-instructional-context]
-- **Gemini CLi Integration with VS Code** - see more details here:  [https://github.com/google-gemini/gemini-cli/blob/main/docs/ide-integration.md]
-
-### IaC Folder
-
-This folder contains all scripts needed to deploy the artifact like REST API to target environment using Terraform.
-
-### Scripts Folder
-
-this folder contains all required powershell scripts that are useful for the repository.
 
 ### Src Folder
 
