@@ -21,6 +21,7 @@ Una User Story descrive un valore dal punto di vista dell'utente.
 - **WHEN**: L'azione compiuta (es. "Quando clicca su Paga Ora").
 - **THEN**: Il risultato atteso (es. "Allora riceve l'accesso immediato").
 
+<<<<<<< HEAD
 ## 4. VERTICAL SLICING — IL PRINCIPIO DI SCOMPOSIZIONE
 
 Quando un'Epica viene divisa in più User Story, ogni story DEVE rappresentare una **fetta
@@ -47,9 +48,16 @@ Ogni story verticale è più stretta in ampiezza (fa meno cose) ma completa in p
 a fine sprint, probabilmente non è una fetta verticale — è un task tecnico travestito da story.
 
 ## 5. ESEMPIO CONCRETO
+=======
+## 4. ESEMPIO CONCRETO
+>>>>>>> 6d651aa388907907bf4cc54d524b8c0f5be87f5d
 
 **Story**: COME utente abbonato, VOGLIO sbloccare l'area video subito dopo il pagamento, PERCHÉ voglio iniziare la mia formazione senza attese.
 **AC**:
 
 1. GIVEN utente non abbonato, WHEN visita l'area video, THEN vede il pulsante 'Abbonati'.
+<<<<<<< HEAD
 2. GIVEN transazione Stripe completata con successo, WHEN il webhook registra l'evento, THEN lo stato passa a 'Premium' e la pagina sblocca i video.
+=======
+2. GIVEN transazione Stripe completata con successo, WHEN il webhook registra l'evento, THEN lo stato passa a 'Premium' e la pagina sblocca i video.
+>>>>>>> 6d651aa388907907bf4cc54d524b8c0f5be87f5d
