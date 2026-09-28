@@ -2,14 +2,44 @@
 
 You are operating within the Application Layer. This layer orchestrates use cases by transforming user intent into Domain actions.
 
+## 🎯 Strategy: Integrity Rules
+
+L'obiettivo fondamentale dell'Application Layer è guidare i flussi applicativi mantenendo un elevato grado di disaccoppiamento ed isolamento:
+
+1. **Purezza del Modello di Dipendenza:** Dipende unicamente dal **Domain Layer**. Non conosce i dettagli di framework web, database o protocolli di comunicazione.
+2. **Inversione delle Dipendenze (DIP):** L'Application Layer definisce i *contratti* (port/interfacce, come ad es. `IOrderRepository` o `INotificationService`), mentre l'**Infrastructure Layer** li implementa (*adapters*).
+3. **Assenza di Noise Tecnologico:** Nessun riferimento diretto a SQL, ORM (Dapper/EF Core), protocolli HTTP, code di messaggistica (RabbitMQ/ActiveMQ) o controller ASP.NET.
+4. **Validation:** Every command must be validated via FluentValidation before reaching the Domain.
+
 ## Strategy: Integrity Rules
 
 - Purity & Dependencies: Depends only on the Domain project. Never reference Infrastructure or database-specific packages.
 - Orchestration (CQRS): Strictly separate Commands (writes) from Queries (reads).
 - Result Pattern: Following Domain rules, all services and handlers must return Result<T> or Option<T> objects instead of throwing business exceptions.
-- Validation: Every command must be validated via FluentValidation before reaching the Domain.
 
-## Project Configuration (.csproj)
+## 📂 Vertical Slice Architecture: Organizzazione per Feature
+
+Rispetto alle classiche strutture layered organizzate "per tipo di file" (es. cartella `Controllers/`, cartella `Handlers/`, cartella `DTOs/`), l'approccio consigliato adotta la **Vertical Slice Architecture**:
+
+- **Feature-driven:** Il codice è aggregato in base alla *feature* aziendale (es. `CreateOrder`, `CancelSubscription`).
+- **Coesione Modulare:** Contratto, Command/Query, DTO e Handler risiedono all'interno del medesimo namespace o cartella di slice.
+- **Vantaggi Operativi:**
+  - Riduzione drastica dei conflitti di merge su Git.
+  - Facilità di isolamento e testabilità delle singole funzionalità.
+  - Azzeramento dell'inquinamento incrociato tra use-case differenti.
+
+## ⚡ CQRS e Middleware Pipeline (Command, Query)
+
+L'interazione con l'Application Layer segue il pattern **CQRS** (Command Query Responsibility Segregation):
+
+- **Command:** Esprime un'intenzione di modifica di stato (scrive/crea/aggiorna). Produce effetti collaterali e restituisce esiti d'esecuzione.
+- **Query:** Richiede informazioni senza alterare lo stato del sistema. Restituisce DTO ottimizzati per la lettura.
+
+---
+
+## 🛠️ Architettura del Codice & Modello Dominio (Esempio C#)
+
+### Project Configuration (.csproj)
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
