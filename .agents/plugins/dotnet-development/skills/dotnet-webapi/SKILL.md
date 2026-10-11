@@ -1,21 +1,16 @@
 ---
 name: dotnet-webapi
 description: >
-  Guides creation and modification of ASP.NET Core Web API endpoints with
-  correct HTTP semantics, OpenAPI metadata, and error handling.
-  USE FOR: adding new API endpoints (controllers or minimal APIs), wiring up
-  OpenAPI/Swagger, creating .http test files, setting up global error handling
-  middleware.
-  DO NOT USE FOR: general C# coding style, EF Core data access or query
-  optimization (use optimizing-ef-core-queries), frontend/Blazor work, gRPC
+  Guides creation and modification of ASP.NET Core Web API endpoints with correct HTTP semantics, OpenAPI metadata, and error handling.
+  USE FOR: adding new API endpoints (controllers or minimal APIs), wiring up OpenAPI/Swagger, creating .http test files, setting up global error handling middleware.
+  DO NOT USE FOR: general C# coding style, EF Core data access or query optimization (use optimizing-ef-core-queries), frontend/Blazor work, gRPC
   services, or SignalR hubs.
 license: MIT
 ---
 
 # ASP.NET Core Web API
 
-Produce well-structured ASP.NET Core Web API endpoints with proper HTTP
-semantics, OpenAPI documentation, and error handling.
+Produce well-structured ASP.NET Core Web API endpoints with proper HTTP semantics, OpenAPI documentation, and error handling.
 
 ## When to Use
 
@@ -43,15 +38,12 @@ Before applying this skill, gather the project context needed to match the
 existing API style and wiring:
 
 - the ASP.NET Core entry point, typically `Program.cs`;
-- any existing controllers, especially classes inheriting `ControllerBase` or
-  using `[ApiController]`;
-- any existing minimal API registrations such as `app.MapGet`, `app.MapPost`,
-  `app.MapPut`, or `app.MapDelete`;
+- any existing controllers, especially classes inheriting `ControllerBase` or using `[ApiController]`;
+- any existing minimal API registrations such as `app.MapGet`, `app.MapPost`,`app.MapPut`, or `app.MapDelete`;
 - related DTO, model, validation, and error-handling types already used by the project;
 - available build, run, and test commands so changes can be verified.
 
-If the user asks for a new endpoint, inspect the current project structure first
-so the implementation follows the established conventions rather than mixing styles.
+If the user asks for a new endpoint, inspect the current project structure first so the implementation follows the established conventions rather than mixing styles.
 
 ## Workflow
 
@@ -184,8 +176,7 @@ immutability that records provide.
 
 ### Step 3: Implement the endpoints
 
-Whether using controllers or minimal APIs, follow these HTTP conventions
-consistently.
+Whether using controllers or minimal APIs, follow these HTTP conventions consistently defined into `references/api-coding-standard.md`
 
 **Organizing minimal API endpoints:** For projects using minimal APIs, organize
 endpoints by resource using static classes with a static `Map<Resource>` method.

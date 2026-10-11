@@ -1,0 +1,6 @@
+{
+    "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+    "name": "dotnet-development",
+    "description": "Plugin to provide all required skill to develop .NET applications, including ASP.NET Core Web API, Entity Framework Core, and C# coding standards.",
+    "version": "1.0.0",
+}

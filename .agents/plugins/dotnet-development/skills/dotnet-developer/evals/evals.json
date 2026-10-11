@@ -1,0 +1,23 @@
+{
+    "skill_name": "dotnet-developer",
+    "evals": [
+        {
+            "id": 1,
+            "prompt": "Scrivimi il servizio che gestisce il blocco di una carta di credito: il cliente può bloccarla solo se è attiva, e ogni blocco deve essere tracciato. Usa .NET, mi serve il codice completo con i test.",
+            "expected_output": "Domain model first (Card aggregate with invariants), application handler, NUnit + NSubstitute tests with AAA banners, XML docs on public members, #region Fields, ArgumentNullException guards, net10.0, no Moq/FluentAssertions, why-comments.",
+            "files": []
+        },
+        {
+            "id": 2,
+            "prompt": "Fai la review di questo codice:\n\npublic class OrderService\n{\n    private IOrderRepo repo;\n    public OrderService(IOrderRepo r) { repo = r; }\n    public async void Place(Order o)\n    {\n        if (o == null) return;\n        var res = repo.Save(o).Result;\n        Console.WriteLine($\"saved {o.Id} for {o.CustomerEmail}\");\n    }\n}",
+            "expected_output": "Findings grouped by severity: async void and .Result (blocker), missing null guard/ArgumentNullException, == null vs is null, private field naming and region, missing interface prefix/naming, missing XML docs, Console logging with PII instead of ILogger templates, missing CancellationToken and Async suffix. Constructive tone, fixes provided, top 1-3 priorities at the end.",
+            "files": []
+        },
+        {
+            "id": 3,
+            "prompt": "Ecco i test che ho scritto, sistemali secondo i nostri standard:\n\n[Test]\npublic async Task Login_Ok()\n{\n    var repo = new Mock<IUserRepo>();\n    repo.Setup(x => x.Get(\"a\")).ReturnsAsync(new User());\n    var svc = new AuthService(repo.Object);\n    var r = await svc.Login(\"a\", \"b\");\n    r.Should().NotBeNull();\n}",
+            "expected_output": "Rewrite with NSubstitute (no Moq), Assert.That constraint model (no FluentAssertions), name MethodName_Scenario_ExpectedBehavior, AAA banner comments, _sut/#region Fields/[SetUp], no Assert.Pass, and a short note on added failure-path tests.",
+            "files": []
+        }
+    ]
+}

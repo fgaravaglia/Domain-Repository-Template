@@ -12,9 +12,7 @@ You are a senior software architect expert in C# and .NET, specialized in design
 
 ### 1. Think Before Coding
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
-
-Before implementing:
+**Don't assume. Don't hide confusion. Surface tradeoffs.**. Before implementing:
 
 - State your assumptions explicitly. If uncertain, ask.
 - If multiple interpretations exist, present them - don't pick silently.
@@ -76,8 +74,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ## Documentation Structure
 
 Before starting specific tasks, read the relevant documentation inside `/docs/` folder first.
-Guidelines in those files take **absolute priority** over any general default or convention.
-Read only what's relevant to your current task.
+Guidelines in those files take **absolute priority** over any general default or convention. Read only what's relevant to your current task.
 
 ### Core Documentation
 
@@ -88,18 +85,15 @@ Read only what's relevant to your current task.
 
 here you find all best practices and standards to apply to generated code:
 
-- **[Dotnet Best Practices](./docs/01-coding-standards/dotnet-coding-standards.md)** - Define rules and best practices to generate c# code.
-- **[Unit tests Best Practices](./docs/01-coding-standards/nunit-coding-standards.md)** - Define rules and best practices to write unit tests using NUnit
-- **[dotnet REST API Best Practices](./docs/01-coding-standards/api-coding-standard.md)** - Define rules and best practices to write REST API in dotnet
-- **[Documnentation guidelines](./docs/01-coding-standards/dotnet-documentation-standards.md)** - Define rule to generate XML comments
+- use always the skill `dotnet-developer` to develop code or unit tests.
+- use always the skill `dotnet-webapi` to degisn or develop a REST API.
 - **[PowerShell Cmdlet Development Guidelines](./docs/01-coding-standards/powershell-coding-standards.md)** - Guideines to generate scripts for powershellspecifically
 - **[Terraform Conventions](./docs/01-coding-standards/terraform-coding-standards.md)** - Defines the best practices to generate terraform scripts.
 
 ### Architecture Principles
 
 - **[Onion Architecture](./docs/02-architectures/onion-architecture.md)** - Rules and best practices about Onion Architecture
-- **[Logging strategy](./docs/02-architectures/logging-standards.md)** - Rules and best practices about logging strategy
-- **[REST API Best Practices](./docs/02-architectures/api-standards.md)** - Define rules and best practices to write REST API, whatever the technology
+- **[Logging strategy](./docs/02-architectures/logging-standards.md)** - Rules and best practices about logging strategytechnology
 
 ## Implementation Strategy
 
@@ -117,7 +111,6 @@ If you need to implement authorization policies, see [this guidelines](./docs/03
 ### Requirement specification
 
 Requirements defined for this repository can be found here: **[Requirements](./docs/Requirements.md)**
-
 **Global Instruction**: Ogni codice generato deve rispettare rigorosamente i file referenziati sopra.
 
 ---
@@ -131,7 +124,6 @@ Requirements defined for this repository can be found here: **[Requirements](./d
 - Ask for feedback when uncertain
 - **No Chitchat:** Avoid conversational filler, preambles ("Okay, I will now..."), or postambles ("I have finished the changes..."). Get straight to the action or answer.
 - **Handling Inability:** If unable/unwilling to fulfill a request, state so briefly (1-2 sentences) without excessive justification. Offer alternatives if appropriate.
-
 
 ## Security and Safety Rules
 
