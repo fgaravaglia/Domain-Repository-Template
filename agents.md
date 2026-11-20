@@ -112,6 +112,7 @@ If you need to implement authorization policies, see [this guidelines](./docs/03
 
 Requirements defined for this repository can be found here: **[Requirements](./docs/Requirements.md)**
 **Global Instruction**: Ogni codice generato deve rispettare rigorosamente i file referenziati sopra.
+- Sharpen a project's domain model documentation can be found in docs
 
 ---
 
